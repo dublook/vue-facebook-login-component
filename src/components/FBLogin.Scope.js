@@ -53,7 +53,7 @@ export default {
       if (fbLoginStatus.status === 'connected') {
         this.connected = true
       }
-      this.$emit('sdk-init', { FB: sdk })
+      this.$emit('sdk-init', { FB: sdk, loginStatus: fbLoginStatus })
       resolve()
     })
     this.doAsync(created)
