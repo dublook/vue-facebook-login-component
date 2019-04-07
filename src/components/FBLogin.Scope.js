@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    const created = new Promise(async resolve => {
+    const created = new Promise(async (resolve, reject) => {
       const { appId, version, options } = this
       try {
         const sdk = await getFbSdk({ appId, version, options })
@@ -61,7 +61,7 @@ export default {
         reject(error);
       }
     })
-    this.doAsync(created)
+    created.catch(error => console.warn('Failed to load fb script'))
   },
   updated() {
     if (this.$slots.default && this.$slots.default.length) {

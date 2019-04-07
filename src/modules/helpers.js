@@ -29,12 +29,13 @@ export function initFbSdk(options) {
 }
 
 export function getFbSdk(options) {
-  return new Promise(async resolve => {
+  return new Promise((resolve, reject) => {
     if (window.FB) {
       resolve(window.FB)
     } else {
-      await initFbSdk(options)
-      resolve(window.FB)
+      initFbSdk(options)
+        .then(() => resolve(window.FB))
+        .catch((error) => reject(error))
     }
   })
 }
