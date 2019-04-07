@@ -5,19 +5,23 @@
 /* global window, document */
 
 export function initFbSdk(options) {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     window.fbAsyncInit = function () {
       const defaults = { cookie: true, xfbml: true }
       options = { ...defaults, ...options }
       window.FB.init(options)
       resolve()
     };
+    function handleFbScriptLoadError(error) {
+      reject(error);
+    }
     /* eslint-disable */
     (function (d, s, id) {
       const fjs = d.getElementsByTagName(s)[0]
       if (d.getElementById(id)) { return; }
       const js = d.createElement(s); js.id = id
-      js.src = '//connect.facebook.net/en_US/sdk.js'
+      js.src = '//connect.facebook.net/ja_JP/sdk.js'
+      js.onerror = handleFbScriptLoadError
       fjs.parentNode.insertBefore(js, fjs)
     }(document, 'script', 'facebook-jssdk'))
     /* eslint-enable */
