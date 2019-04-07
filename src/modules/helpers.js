@@ -17,7 +17,7 @@ export function initFbSdk(options) {
       const fjs = d.getElementsByTagName(s)[0]
       if (d.getElementById(id)) { return; }
       const js = d.createElement(s); js.id = id
-      js.src = '//connect.facebook.net/en_US/sdk.js'
+      js.src = '//connect.facebook.net/ja_JP/sdk.js'
       fjs.parentNode.insertBefore(js, fjs)
     }(document, 'script', 'facebook-jssdk'))
     /* eslint-enable */
