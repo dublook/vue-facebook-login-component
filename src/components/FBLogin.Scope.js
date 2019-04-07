@@ -48,13 +48,18 @@ export default {
   created() {
     const created = new Promise(async resolve => {
       const { appId, version, options } = this
-      const sdk = await getFbSdk({ appId, version, options })
-      const fbLoginStatus = await getFbLoginStatus()
-      if (fbLoginStatus.status === 'connected') {
-        this.connected = true
+      try {
+        const sdk = await getFbSdk({ appId, version, options })
+        const fbLoginStatus = await getFbLoginStatus()
+        if (fbLoginStatus.status === 'connected') {
+          this.connected = true
+        }
+        this.$emit('sdk-init', { FB: sdk, loginStatus: fbLoginStatus })
+        resolve()
+      } catch (error) {
+        this.$emit('sdk-init-error', error)
+        reject(error);
       }
-      this.$emit('sdk-init', { FB: sdk, loginStatus: fbLoginStatus })
-      resolve()
     })
     this.doAsync(created)
   },
